@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useParams } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
@@ -34,14 +34,21 @@ function App() {
   const [movieList, setMovieList] = useState(mockup);
   const [viewList, setViewList] = useState(null);
   const [viewCount, setViewCount] = useState(1);
+  const [movieID, setMovieID] = useState(null);
+  const [movieDetailInfo, setMovieDetailInfo] = useState(null);
 
   // 장르 리스트 가져오기
   useEffect(() => {
     if (genreList === null) {
-      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=ko`).then((res) => {
-        setGenreList(res.data.genres);
-        console.log("장르list", genreList);
-      });
+      axios
+        .get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=ko`)
+        .then((res) => {
+          setGenreList(res.data.genres);
+          console.log("장르list", genreList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     console.log("장르list", genreList);
   }, [genreList]);
@@ -49,13 +56,34 @@ function App() {
   // 영화 리스트 가져오기
   useEffect(() => {
     if (movieList === null) {
-      axios.get(`https://api.themoviedb.org/3/list/${28}?api_key=${API_KEY}&language=ko`).then((res) => {
-        setMovieList(res.data.items);
-        console.log("무비리스트", movieList);
-      });
+      axios
+        .get(`https://api.themoviedb.org/3/list/${28}?api_key=${API_KEY}&language=ko`)
+        .then((res) => {
+          setMovieList(res.data.items);
+          console.log("무비리스트", movieList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     console.log("무비리스트", movieList);
   }, [movieList]);
+
+  // 영화 디테일 정보 가져오기
+
+  useEffect(() => {
+    if (movieID !== null) {
+      axios
+        .get(`https://api.themoviedb.org/3/movie/${movieID}?api_key=${API_KEY}&language=ko`)
+        .then((res) => {
+          setMovieDetailInfo(res.data);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [movieID]);
 
   // 브라우저에 나타나는 영화 리스트
   useEffect(() => {
@@ -90,8 +118,8 @@ function App() {
           <Home title='home' viewList={viewList} />
         </Route>
 
-        <Route path='/detail'>
-          <Detail title='detail' />
+        <Route path='/detail/:id'>
+          <Detail title='detail' setMovieID={setMovieID} movieDetailInfo={movieDetailInfo} />
         </Route>
 
         <Route render={() => <div>404 not found</div>}></Route>

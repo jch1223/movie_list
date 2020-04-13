@@ -14,7 +14,7 @@ function MovieList({ viewList }) {
         viewList.map((item) => {
           return (
             <Col lg={6} xs={12} key={item.id}>
-              <Link to={`/detail?id=${item.id}`}>
+              <Link to={`/detail/${item.id}`}>
                 <CardStyled
                   hoverable
                   bordered={false}
