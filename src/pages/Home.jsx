@@ -1,8 +1,13 @@
 import React from "react";
 import Layout from "../layout/Layout";
+import MovieList from "../components/MovieList";
 
-function Home({ title }) {
-  return <Layout title={title}>홈 화면</Layout>;
+function Home({ title, viewList }) {
+  return (
+    <Layout title={title}>
+      <MovieList viewList={viewList} />
+    </Layout>
+  );
 }
 
 export default Home;

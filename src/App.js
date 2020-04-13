@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 
 import axios from "axios";
-import { API_KEY } from "./common/api_key";
+import { API_KEY } from "./common/common";
 
 import mockup from "./mockup.json";
 
@@ -33,7 +33,7 @@ function App() {
   ]);
   const [movieList, setMovieList] = useState(mockup);
   const [viewList, setViewList] = useState(null);
-  const [viewCount, setViewCount] = useState(10);
+  const [viewCount, setViewCount] = useState(8);
 
   useEffect(() => {
     if (genreList === null) {
