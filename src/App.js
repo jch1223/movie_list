@@ -33,8 +33,9 @@ function App() {
   ]);
   const [movieList, setMovieList] = useState(mockup);
   const [viewList, setViewList] = useState(null);
-  const [viewCount, setViewCount] = useState(8);
+  const [viewCount, setViewCount] = useState(1);
 
+  // 장르 리스트 가져오기
   useEffect(() => {
     if (genreList === null) {
       axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=ko`).then((res) => {
@@ -45,6 +46,7 @@ function App() {
     console.log("장르list", genreList);
   }, [genreList]);
 
+  // 영화 리스트 가져오기
   useEffect(() => {
     if (movieList === null) {
       axios.get(`https://api.themoviedb.org/3/list/${28}?api_key=${API_KEY}&language=ko`).then((res) => {
@@ -55,9 +57,31 @@ function App() {
     console.log("무비리스트", movieList);
   }, [movieList]);
 
+  // 브라우저에 나타나는 영화 리스트
   useEffect(() => {
-    setViewList(movieList.slice(0, viewCount));
+    setViewList(movieList.slice(0, viewCount * 8));
   }, [movieList, viewCount]);
+
+  // 인피니티 스크롤
+  useEffect(() => {
+    const MAX_COUNT = Math.ceil(movieList.length / 8);
+
+    const onScroll = () => {
+      if (
+        document.documentElement.scrollTop + document.documentElement.clientHeight ===
+        document.documentElement.scrollHeight
+      ) {
+        if (viewCount < MAX_COUNT) {
+          setViewCount((prevPage) => prevPage + 1);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+
+    // console.log(viewCount);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [viewCount, movieList]);
 
   return (
     <>
