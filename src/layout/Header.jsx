@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Header = ({ title }) => {
+const Header = ({ title, movieTitle }) => {
   return (
     <header>
       <NavStyled>
         <LinkStyled to='/'>홈으로</LinkStyled>
       </NavStyled>
       {title === "home" && <TitleStyled>무비리스트</TitleStyled>}
-      {title === "detail" && <TitleStyled>상세페이지</TitleStyled>}
+      {title === "detail" && <TitleStyled>{movieTitle}</TitleStyled>}
     </header>
   );
 };

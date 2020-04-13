@@ -3,10 +3,10 @@ import Header from "./Header";
 
 import styled from "styled-components";
 
-const Layout = ({ title, children }) => {
+const Layout = ({ title, movieTitle, children }) => {
   return (
     <>
-      <Header title={title} />
+      <Header title={title} movieTitle={movieTitle} />
       <WrapStyled> {children}</WrapStyled>
     </>
   );
