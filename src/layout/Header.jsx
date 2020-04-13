@@ -16,22 +16,16 @@ const Header = ({ title }) => {
 
 const TitleStyled = styled.div`
   text-align: center;
+  font-size: 30px;
+  font-weight: 600;
   padding-top: 20px;
   padding-bottom: 40px;
-  @media (max-width: 992px) {
-    float: left;
-  }
 `;
 
 const NavStyled = styled.div`
   padding: 10px 10%;
   background-color: #e2e2e2;
   overflow: hidden;
-  @media (max-width: 992px) {
-    background-color: #fff;
-    float: right;
-    padding: 37px 0;
-  }
 `;
 
 const LinkStyled = styled(Link)`
